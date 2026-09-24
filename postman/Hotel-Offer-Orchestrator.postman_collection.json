@@ -1,0 +1,110 @@
+{
+  "info": {
+    "name": "Hotel Offer Orchestrator",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:3000" }],
+  "item": [
+    {
+      "name": "Get hotels - valid city with overlaps (delhi)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/hotels?city=delhi",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "hotels"],
+          "query": [{ "key": "city", "value": "delhi" }]
+        }
+      }
+    },
+    {
+      "name": "Get hotels - price filtered (delhi, 5000-7000)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/hotels?city=delhi&minPrice=5000&maxPrice=7000",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "hotels"],
+          "query": [
+            { "key": "city", "value": "delhi" },
+            { "key": "minPrice", "value": "5000" },
+            { "key": "maxPrice", "value": "7000" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get hotels - city with no results",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/hotels?city=atlantis",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "hotels"],
+          "query": [{ "key": "city", "value": "atlantis" }]
+        }
+      }
+    },
+    {
+      "name": "Get hotels - missing city (400 expected)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/hotels",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "hotels"]
+        }
+      }
+    },
+    {
+      "name": "Supplier A - direct mock check",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/supplierA/hotels?city=delhi",
+          "host": ["{{baseUrl}}"],
+          "path": ["supplierA", "hotels"],
+          "query": [{ "key": "city", "value": "delhi" }]
+        }
+      }
+    },
+    {
+      "name": "Supplier B - direct mock check",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/supplierB/hotels?city=delhi",
+          "host": ["{{baseUrl}}"],
+          "path": ["supplierB", "hotels"],
+          "query": [{ "key": "city", "value": "delhi" }]
+        }
+      }
+    },
+    {
+      "name": "Simulate Supplier A down",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/hotels?city=delhi&simulateDown=true",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "hotels"],
+          "query": [
+            { "key": "city", "value": "delhi" },
+            { "key": "simulateDown", "value": "true", "description": "Note: hit /supplierA/hotels?simulateDown=true directly to actually force the 503; this entry documents the scenario." }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Health check",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    }
+  ]
+}
